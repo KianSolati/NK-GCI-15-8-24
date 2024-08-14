@@ -1,0 +1,316 @@
+body {
+    font-family: Arial, sans-serif;
+    
+}
+
+.container {
+    width: 100%;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+/* REPLACED */
+/* .container {
+    width: 100%;
+    padding: 15px;
+} */
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.login-box {
+    max-width: 500px;
+    margin: 0 auto;
+    border: 1px solid #514f4d;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #514f4d;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.login-box h2 {
+    margin-bottom: 20px;
+}
+
+
+@media (max-width: 768px) {
+    .col {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+h1, h2, h3 {
+    color: #4f98e5;
+    margin-top: 20px;
+}
+
+/* REPLACED */
+/* .container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+} */
+
+.navbar {
+    background-color: #514f4d;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.navbar a {
+    color: #fff;
+    margin-right: 10px;
+}
+
+.navbar a:hover {
+    background-color: #0056b3;
+    color: #fff;
+    border-radius: 4px;
+}
+
+.table {
+    background-color: #fff;
+    margin-top: 20px;
+}
+
+.table th, .table td {
+    vertical-align: middle !important;
+    text-align: center;
+}
+
+.alert {
+    margin-top: 20px;
+}
+
+.form-control {
+    border-radius: 4px;
+}
+
+/* Don't think this is used */
+/* .error {
+    color: red;
+    font-size: 0.9em;
+} */
+
+button {
+    border-radius: 4px;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+button:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+
+/* Container to hold the row */
+.row {
+    display: flex;
+    flex-direction: row;
+    width: 100%; /* Full width of the container */
+}
+
+/* Each column taking up equal width */
+.column {
+    /* flex: 1; */
+    display: flex;
+    justify-content: center; /* Centering content horizontally */
+    align-items: center; /* Centering content vertically */
+    padding: 10px; /* Optional padding */
+}
+
+/* Ensuring no borders, background, or visible separation */
+.column div {
+    width: 100%; /* Full width within the column */
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start; /* Aligning items to start */
+    align-items: center;
+    border: none; /* Removing borders */
+    background: none; /* No background */
+    padding: 0; /* No padding */
+    margin: 0; /* No margin */
+}
+
+/* Additional input/button styling to ensure consistent look */
+input.form-control {
+    flex: 1; /* Allow input to take remaining space */
+    box-sizing: border-box;
+}
+
+button.btn-secondary, button.btn-primary {
+    margin-left: 10px; /* Optional space between input and button */
+}
+
+
+
+.search-and-button input, .search-and-button {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+
+
+/* .search-and-button, .search-and-voice {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px; /* Adjust as necessary for spacing between elements */
+/* } */
+
+/* .search-and-voice {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+} */
+
+/* .search-and-voice .form-control {
+    flex: 1;
+    margin-right: 15px; /* Space between the input and the button */
+/* } */
+
+#voiceSearchBtn {
+    background: #007bff; /* Primary background color */
+    color: white; /* Text color */
+    border: 1px solid #007bff; /* Border color matching the background */
+    border-radius: 4px; /* Rounded corners */
+    padding: 10px; /* Padding inside the button */
+    cursor: pointer; /* Pointer cursor on hover */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#voiceSearchBtn i {
+    font-size: 20px; /* Icon size */
+}
+#voiceSearchBtn:hover {
+    background: #0056b3; /* Darker shade on hover */
+    border-color: #0056b3; /* Match border with background on hover */
+}
+#voiceSearchBtn:focus {
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 0 2px rgba(38, 143, 255, 0.5); /* Custom focus outline */
+}
+
+
+
+dropdown-menu {
+    display: none; /* Initially hidden */
+    position: absolute;
+    background-color: #514f4d; /* Match navbar background color */
+    min-width: 160px;
+    border: none; /* Remove border */
+    box-shadow: none; /* Remove box-shadow */
+    z-index: 1;
+    right: 0;
+    left: auto;
+}
+
+/* Style for dropdown items */
+.dropdown-item {
+    color: #fff; /* Text color */
+    padding: 12px 16px; /* Padding inside the dropdown items */
+    text-decoration: none; /* Remove underline */
+    display: block; /* Ensure the items are block elements */
+    background-color: #514f4d; /* Match navbar background color */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Add transition for smooth hover effects */
+}
+
+.dropdown-item:hover {
+    background-color: #3e3d3b; /* Slightly darker background color on hover */
+    color: #fff; /* Keep text color white on hover */
+}
+
+.dropdown-item:last-child {
+    border-bottom: none; /* Remove border from the last item */
+}
+
+.dropdown-item:active {
+    background-color: #3e3d3b; /* Same as hover background color when clicked */
+    color: #fff; /* Keep text color white when clicked */
+}
+
+/* Remove extra spacing around the dropdown menu */
+.dropdown-menu::before,
+.dropdown-menu::after {
+    display: none;
+}
+
+
+/* Dropdown Button */
+.dropbtn {
+    background-color: #0420aa;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* Dropdown button on hover & focus */
+  .dropbtn:hover, .dropbtn:focus {
+    background-color: #3e8e41;
+  }
+  
+
+  /* The search field */
+#myInput {
+    box-sizing: border-box;
+    background-image: url('searchicon.png');
+    background-position: 14px 12px;
+    background-repeat: no-repeat;
+    font-size: 16px;
+    padding: 14px 20px 12px 45px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* The search field when it gets focus/clicked on */
+  #myInput:focus {outline: 3px solid #ddd;}
+  
+
+  /* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f6f6f6;
+    min-width: 230px;
+    border: 1px solid #ddd;
+    z-index: 1;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content a:hover {background-color: #f1f1f1}
+  
+  /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+  .show {display:block;}
+  

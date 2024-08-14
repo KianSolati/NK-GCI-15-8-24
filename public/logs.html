@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logs</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome -->
+</head>
+<body>
+    <div id="navbar-container"></div> <!-- Placeholder for navbar -->
+
+    <div class="container mt-4">
+        <h1>Logs</h1>
+        <div class="admin-section mb-4" data-role="Admin">
+            <h3>Admin Actions</h3>
+            <button class="btn btn-secondary" onclick="addDummyData('large')">Add Dummy Logs Data</button>
+            <button class="btn btn-secondary" onclick="addDummyData('small')">Add Small Dummy Logs Data</button>
+            <button class="btn btn-secondary" onclick="deleteAllLogsData()">Delete All Logs Data</button>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <div class="dropdown" data-role="Level1 Level2 Level3 Admin">
+                    <button onclick="myFunction()" class="btn btn-primary">Filter</button>
+                </div>
+            </div>
+            <div class="column">
+                <div class="search-and-button" data-role="Level1 Level2 Level3 Admin">
+                    <input type="text" id="searchInput" class="form-control" placeholder="Search for logs..." onkeyup="filterLogs()">
+                </div>
+            </div>
+            <div class="column">
+                <div class="search-and-button" data-role="Level1 Level2 Level3 Admin">
+                    <button class="btn btn-secondary" id="voiceSearchBtn" title="Start Voice Search">
+                        <i class="fas fa-microphone"></i> <!-- Font Awesome microphone icon -->
+                    </button>
+                </div>
+            </div>
+            <div class="column">
+                <div class="add-new-log" data-role="Level2 Level3 Admin">
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#logModal" onclick="setDefaultLogDate(); resetLogsForm()">Add New Log</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="dropdown" data-role="Level1 Level2 Level3 Admin">
+            <!-- <button onclick="myFunction()" class="btn btn-primary">Filter</button> -->
+            <div id="myDropdown" class="dropdown-content">
+                <div id="businessNameCheckbox">
+                    <input type="checkbox" id="businessName" onclick="filterFunction()" />
+                    Business Name
+                </div>
+                <div id="firstNameCheckbox">
+                    <input type="checkbox" id="firstName" onclick="filterFunction()" />
+                    First Name
+                </div>
+                <div id="lastNameCheckbox">
+                    <input type="checkbox" id="lastName" onclick="filterFunction()" />
+                    Last Name
+                </div>
+                <div id="logDateCheckbox">
+                    <input type="checkbox" id="logDate" onclick="filterFunction()" />
+                    Log Date
+                </div>
+                <div id="logTypeCheckbox">
+                    <input type="checkbox" id="logType" onclick="filterFunction()" />
+                    Log Type
+                </div>
+                <div id="notesCheckbox">
+                    <input type="checkbox" id="notes" onclick="filterFunction()" />
+                    Notes
+                </div>
+            </div>
+        </div>
+        
+
+          
+
+        <table class="table table-bordered" data-role="Level1 Level2 Level3 Admin">
+            <thead>
+                <tr>
+                    <th onclick="sortTable(0)">Log ID <span class="sort-arrow" id="sort-arrow-0">&#9650;</span></th>
+                    <th onclick="sortTable(1)">Business Name <span class="sort-arrow" id="sort-arrow-1"></span></th>
+                    <th onclick="sortTable(2)">First Name <span class="sort-arrow" id="sort-arrow-2"></span></th>
+                    <th onclick="sortTable(3)">Last Name <span class="sort-arrow" id="sort-arrow-3"></span></th>
+                    <th onclick="sortTable(4)">Log Date <span class="sort-arrow" id="sort-arrow-4"></span></th>
+                    <th onclick="sortTable(5)">Log Type <span class="sort-arrow" id="sort-arrow-5"></span></th>
+                    <th onclick="sortTable(6)">Notes <span class="sort-arrow" id="sort-arrow-6"></span></th>
+                    <th class="actions-column" data-role="Level3 Admin">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="logsTableBody">
+                <!-- Data will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+    <script src="navbar.js"></script>
+
+    <div class="modal fade" id="logModal" tabindex="-1" role="dialog" aria-labelledby="logModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logModalLabel">Add New Log</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="logForm">
+                        <input type="hidden" id="logID">
+                        <div class="form-group">
+                            <label for="businessID">Business ID</label>
+                            <input type="number" class="form-control" id="businessID" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="userID">User ID</label>
+                            <input type="number" class="form-control" id="userID" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="logDate">Log Date</label>
+                            <input type="date" class="form-control" id="logDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="logType">Log Type</label>
+                            <select class="form-control" id="logType" required>
+                                <option value="Phone">Phone</option>
+                                <option value="In Person">In Person</option>
+                                <option value="Event">Event</option>
+                                <option value="Email">Email</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="notes">Notes</label>
+                            <input type="text" class="form-control" id="notes" required>
+                        </div>
+                        <input type="datetime-local" class="form-control" id="createdAt" name="createdAt" readonly>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+function filterFunction() {
+  const input = document.getElementById('searchInput').value.toUpperCase();
+  const table = document.getElementById('logsTableBody');
+  const tr = table.getElementsByTagName('tr');
+
+  const filters = [];
+  if (document.getElementById('businessName').checked) filters.push(1);
+  if (document.getElementById('firstName').checked) filters.push(2);
+  if (document.getElementById('lastName').checked) filters.push(3);
+  if (document.getElementById('logDate').checked) filters.push(4);
+  if (document.getElementById('logType').checked) filters.push(5);
+  if (document.getElementById('notes').checked) filters.push(6);
+
+  for (let i = 0; i < tr.length; i++) {
+    let showRow = false;
+    for (let j = 0; j < filters.length; j++) {
+      const td = tr[i].getElementsByTagName('td')[filters[j]];
+      if (td) {
+        const txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().includes(input)) {
+          showRow = true;
+          break;
+        }
+      }
+    }
+    tr[i].style.display = showRow ? '' : 'none';
+  }
+}
+
+function filterLogs() {
+  filterFunction();
+}
+
+
+
+let sortDirection = {}; // Store the sort direction for each column
+    const defaultSortColumn = 0; // Change this to the index of the column you want to default sort
+    const defaultSortDirection = 'asc'; // Default sort direction ('asc' or 'desc')
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initial sort
+        sortDirection[defaultSortColumn] = defaultSortDirection;
+        sortTable(defaultSortColumn);
+    });
+
+    // Function to sort the table by column
+    function sortTable(columnIndex) {
+        const table = document.getElementById("logsTableBody");
+        const rows = Array.from(table.rows);
+        const isAscending = sortDirection[columnIndex] === 'asc';
+        sortDirection[columnIndex] = isAscending ? 'desc' : 'asc';
+
+        const isNumericColumn = columnIndex === 0; // Assuming Log ID is in the first column (index 0)
+
+        const sortedRows = rows.sort((a, b) => {
+            const cellA = a.cells[columnIndex].innerText.toUpperCase();
+            const cellB = b.cells[columnIndex].innerText.toUpperCase();
+
+            const valueA = isNumericColumn ? parseFloat(cellA) : cellA;
+            const valueB = isNumericColumn ? parseFloat(cellB) : cellB;
+
+            if (valueA < valueB) {
+                return isAscending ? -1 : 1;
+            }
+            if (valueA > valueB) {
+                return isAscending ? 1 : -1;
+            }
+            return 0;
+        });
+
+        table.innerHTML = "";
+        sortedRows.forEach(row => table.appendChild(row));
+        updateSortArrows(columnIndex, sortDirection[columnIndex]);
+    }
+
+    // Function to update sort arrows
+    function updateSortArrows(columnIndex, direction) {
+        const arrows = document.querySelectorAll('.sort-arrow');
+        arrows.forEach(arrow => arrow.innerHTML = ''); // Clear all arrows
+
+        const currentArrow = document.getElementById(`sort-arrow-${columnIndex}`);
+        currentArrow.innerHTML = direction === 'asc' ? '&#9650;' : '&#9660;'; // Up or down arrow
+    }
+
+
+        // Initialize the page and set up event listeners
+        document.addEventListener('DOMContentLoaded', function () {
+            fetchLogsWithDetails(); // Fetch and display logs
+    
+            // Handle form submission for adding or editing logs
+            document.getElementById('logForm').addEventListener('submit', handleLogFormSubmit);
+    
+            // Setup voice search functionality
+            setupVoiceSearch();
+        });
+    
+        // Function to handle form submission for log data
+        function handleLogFormSubmit(event) {
+            event.preventDefault(); // Prevent the default form submission
+    
+            if (confirm('Are you sure you want to update this log?')) {
+                const logID = document.getElementById('logID').value; // Get log ID if available
+                const data = getLogFormData(); // Retrieve form data
+    
+                // Determine HTTP method and endpoint URL based on whether editing or adding a new log
+                const method = logID ? 'PUT' : 'POST';
+                const url = logID ? `/logs/${logID}` : '/logs';
+    
+                sendLogData(url, method, data); // Send data to the server
+            }
+        }
+    
+        // Helper function to gather form data
+        function getLogFormData() {
+            return {
+                businessID: document.getElementById('businessID').value,
+                userID: document.getElementById('userID').value,
+                logDate: document.getElementById('logDate').value,
+                logType: document.getElementById('logType').value,
+                notes: document.getElementById('notes').value,
+                createdAt: document.getElementById('createdAt').value || new Date().toISOString()
+            };
+        }
+    
+        // Function to send log data to the server
+        function sendLogData(url, method, data) {
+            fetch(url, {
+                method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data) // Convert data to JSON string
+            }).then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    $('#logModal').modal('hide'); // Hide the modal on success
+                    fetchLogsWithDetails(); // Refresh the logs list
+                } else {
+                    alert('Error saving log'); // Alert if there's an error
+                }
+            }).catch(error => console.error('Error:', error));
+        }
+    
+        // Function to fetch logs with details and display them
+        // Step 1: Introduce a global array to store log data
+let logsData = [];
+
+function fetchLogsWithDetails() {
+    fetch('/LogsWithDetails')
+        .then(response => response.json())
+        .then(data => {
+            logsData = data;  // Store the fetched log data
+            renderTable(logsData);  // Render the table with all logs
+        })
+        .catch(error => console.error("Fetch error:", error));
+}
+function renderTable(data) {
+    const tableBody = document.getElementById("logsTableBody");
+    tableBody.innerHTML = '';  // Clear any existing rows
+
+    data.forEach(log => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${log.logID}</td>
+            <td>${log.businessName}</td>
+            <td>${log.firstName}</td>
+            <td>${log.lastName}</td>
+            <td>${log.logDate}</td>
+            <td>${log.logType}</td>
+            <td>${log.notes}</td>
+            <td>${getActionButtons(log.logID)}</td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
+
+    
+        // Helper function to generate action buttons for each log row
+        function getActionButtons(logID) {
+    if (globalUserRole === 'Level3' || globalUserRole === 'Admin') {
+        return `
+            <table style="width: 100%;" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td style="width: 50%; padding: 0; margin: 0;">
+                        <button class="btn btn-sm btn-warning" style="width: 100%; border: none; margin: 0;" onclick="editLog(${logID})">Edit</button>
+                    </td>
+                    <td style="width: 50%; padding: 0; margin: 0;">
+                        <button class="btn btn-sm btn-danger" style="width: 100%; border: none; margin: 0;" onclick="deleteLog(${logID})">Delete</button>
+                    </td>
+                </tr>
+            </table>
+        `;
+    }
+    return '';  // Return an empty string if the user doesn't have the required role
+}
+
+    
+        // Function to filter logs based on search input
+        function filterLogs() {
+    const input = document.getElementById("searchInput");
+    const filter = input.value.toUpperCase().trim();
+
+    const filteredData = logsData.filter(log => {
+        const logText = `
+            ${log.logID} 
+            ${log.businessName} 
+            ${log.firstName} 
+            ${log.lastName} 
+            ${log.logDate} 
+            ${log.logType} 
+            ${log.notes}
+        `.toUpperCase();
+        
+        return logText.includes(filter);
+    });
+
+    renderTable(filteredData);  // Re-render the table with filtered data
+}
+
+    
+        // Function to edit a log, fetching log data and filling the form
+        function editLog(logID) {
+            fetch(`/logs/${logID}`)
+                .then(response => response.json())
+                .then(log => {
+                    // Populate the form fields with the fetched data
+                    document.getElementById('logID').value = log.logID;
+                    document.getElementById('businessID').value = log.businessID;
+                    document.getElementById('userID').value = log.userID;
+    
+                    // Format the date for the input field
+                    let formattedDate = "";
+                    if (log.logDate) {
+                        formattedDate = new Date(log.logDate).toISOString().split('T')[0];
+                    }
+                    document.getElementById('logDate').value = formattedDate;
+    
+                    document.getElementById('logType').value = log.logType;
+                    document.getElementById('notes').value = log.notes;
+                    document.getElementById('createdAt').value = log.createdAt;
+    
+                    // Show the modal
+                    $('#logModal').modal('show');
+                })
+                .catch(error => console.error('Error fetching log:', error));
+        }
+    
+        // Function to delete a log
+        function deleteLog(logID) {
+            if (confirm('Are you sure you want to delete this log?')) {
+                fetch(`/logs/${logID}`, { method: 'DELETE' })
+                    .then(response => response.json())
+                    .then(result => {
+                        if (result.success) {
+                            fetchLogsWithDetails(); // Refresh the logs list
+                        } else {
+                            alert('Error deleting log');
+                        }
+                    });
+            }
+        }
+    
+        // Generalized function for adding dummy data
+        function addDummyData(type) {
+            const endpoint = type === 'small' ? '/addSmallDummyLogsData' : '/addDummyLogsData';
+            fetch(endpoint, { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(`Dummy ${type} logs data added successfully - please wait a few seconds to see refreshed page.`);
+                        fetchLogsWithDetails(); // Refresh the logs list
+                    } else {
+                        alert(`Error adding ${type} dummy logs data.`);
+                    }
+                });
+        }
+    
+        // Function to delete all logs data
+        function deleteAllLogsData() {
+            if (confirm('Are you sure you want to delete all logs data?')) {
+                fetch('/logs', { method: 'DELETE' })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('All logs data deleted successfully.');
+                            fetchLogsWithDetails(); // Refresh the logs list
+                        } else {
+                            alert('Error deleting logs data.');
+                        }
+                    });
+            }
+        }
+    
+
+        function resetLogsForm() {
+        console.log("HERE");
+        document.getElementById('logID').value = '';
+        document.getElementById('userID').value = '';
+        document.getElementById('businessID').value = '';
+        document.getElementById('logDate').value = '';
+        document.getElementById('logType').value = '';
+        document.getElementById('notes').value = '';
+        document.getElementById('createdAt').value = '';
+        }
+
+        document.querySelector('[data-target="#logModal"]').addEventListener('click', resetLogsForm);
+
+        // Setup voice search functionality
+        function setupVoiceSearch() {
+            const voiceSearchBtn = document.getElementById('voiceSearchBtn');
+            const searchInput = document.getElementById('searchInput');
+    
+            // Check for browser compatibility
+            if (!('webkitSpeechRecognition' in window)) {
+                voiceSearchBtn.style.display = 'none'; // Hide the button if speech recognition is not supported
+            } else {
+                const recognition = new webkitSpeechRecognition();
+                recognition.continuous = false; // Stops recognizing when user stops speaking
+                recognition.interimResults = false; // Only final results are returned
+    
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    searchInput.value = transcript;
+                    filterLogs(); // Trigger filter with voice input
+                };
+    
+                recognition.onerror = function(event) {
+                    console.error('Speech recognition error:', event.error);
+                };
+    
+                voiceSearchBtn.addEventListener('click', function() {
+                    recognition.start();
+                });
+            }
+        }
+    </script>
+    
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
